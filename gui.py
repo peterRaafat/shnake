@@ -75,6 +75,8 @@ class GUI():
                 else:
                     self.canvas.create_rectangle(top_left[0], top_left[1], bottom_right[0], bottom_right[1],
                                                  outline="black", fill=color[1])
+        self.score_label['text'] = "Score  " + str(self.env.score)
+        self.max_moves_label['text'] = "Maximum moves  " + str(self.env.maxiumum_moves)
         self.canvas.after(int(self.env.refresh_rate/3), self.grid_update)
 
     def run(self):

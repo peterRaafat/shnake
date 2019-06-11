@@ -45,9 +45,7 @@ class Env:
         self.snake_heading = [0, 1, 0, 0]
         self.snake_body = [[0, 0], [0, 1]]
         # manage time
-        self.update_apple_loc()  # remove later
-        self.update_grid() # remove later
-        self.refresh_rate = 300  # ms
+        self.refresh_rate = 125  # ms
 
 
     def get_refresh_rate(self):
@@ -82,6 +80,8 @@ class Env:
             self.delete_tail()
             # update grid
             self.update_grid()
+            self.maxiumum_moves -= 1
+
 
         # update moves left
         return state, score, done
@@ -113,6 +113,7 @@ class Env:
             # decrement the column value of the last index of snake body (head)
             head[1] -= 1
             snake_body.append(head)
+
         self.snake_body = snake_body
 
     def update_grid(self):
@@ -135,9 +136,11 @@ class Env:
         if self.maxiumum_moves == 0:
             self.done = True
             return
+        print(self.snake_body)
         for index in self.snake_body:
             # check if snake left grid
             if (-1 in index) or (self.dimensions in index):
+                print("A")
                 self.done = True
                 return
             # check if snake hit it self
@@ -145,6 +148,7 @@ class Env:
             for i in index:
                 str_index += str(i)
             if str_index in occurrences:
+                print("B")
                 self.done = True
                 return
             occurrences[str_index] = 1
@@ -165,7 +169,9 @@ class Env:
         print(len(self.snake_body))
         if self.snake_body[-1] == self.apple_loc:
             # increment score
-            self.score += 1
+            self.score += 100
+            # reset maximum moves
+            self.maxiumum_moves = 500
             # update apple location
             # avoid getting apple location at snake location
             grid = np.zeros((self.dimensions, self.dimensions))
