@@ -10,3 +10,4 @@ Dependencies:
 To play the game:
 - Clone or download the repo
 - run main.py
+- control the snake with up, right, down, left arrows on keyboard
